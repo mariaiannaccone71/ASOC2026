@@ -445,11 +445,34 @@ body {
 
 /* ═══════════════ FOOTER ═══════════════ */
 .footer {
-  padding:32px 48px; background:var(--bg-card-alt); border-top:1px solid var(--border);
-  text-align:center;
+  padding:40px 48px 36px; background:var(--bg-card-alt); border-top:1px solid var(--border);
 }
-.footer-brand { font-family:var(--font-display); font-size:15px; font-weight:700; color:var(--text-secondary); }
-.footer-sub { font-size:12px; color:var(--text-tertiary); margin-top:4px; }
+.footer-top {
+  display:flex; align-items:center; justify-content:center; gap:24px;
+  margin-bottom:20px; flex-wrap:wrap;
+}
+.footer-logo { height:48px; width:auto; transition: opacity var(--transition); }
+.footer-logo.for-light { display:block; }
+.footer-logo.for-dark { display:none; }
+[data-theme="dark"] .footer-logo.for-light { display:none; }
+[data-theme="dark"] .footer-logo.for-dark { display:block; }
+.footer-divider { width:1px; height:36px; background:var(--border); }
+.footer-partners {
+  display:flex; align-items:center; gap:16px; flex-wrap:wrap; justify-content:center;
+}
+.footer-partner-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:5px 14px; border-radius:20px;
+  font-size:11px; font-weight:600; letter-spacing:.5px;
+  color:var(--text-tertiary); background:var(--bg-card); border:1px solid var(--border);
+}
+.footer-partner-badge svg { flex-shrink:0; }
+.footer-info {
+  text-align:center; font-size:12px; color:var(--text-tertiary); line-height:1.7;
+  padding-top:16px; border-top:1px solid var(--border);
+}
+.footer-info a { color:var(--c-teal); text-decoration:none; }
+.footer-info a:hover { text-decoration:underline; }
 
 /* ═══════════════ DIVIDER ═══════════════ */
 .divider { height:1px; background:var(--border); margin:24px 0; }
@@ -491,7 +514,7 @@ body {
     <line x1="0" y1="57" x2="120" y2="57" stroke="white" stroke-width="2" opacity=".3"/>
   </svg>
 
-  <div class="hero-badge reveal s1"><span class="dot"></span>A Scuola di OpenCoesione — Indagine 2026</div>
+  <div class="hero-badge reveal s1"><span class="dot"></span><img src="assets/ASOC_logo2024_IT_white.png" alt="ASOC" style="height:18px;width:auto;vertical-align:middle;margin-right:4px;opacity:.85">Indagine 2026</div>
   <h1 class="reveal s2">Spopolamento e<br><span class="hl">Alta Capacità</span><br>Napoli–Bari</h1>
   <p class="hero-sub reveal s3">La voce del territorio incontra il progetto: come gli abitanti dell'hinterland beneventano percepiscono il declino demografico — e cosa può cambiare con il più grande investimento ferroviario del Mezzogiorno.</p>
   <div class="hero-meta reveal s4">
@@ -811,8 +834,32 @@ body {
 
 <!-- ═══════════════ FOOTER ═══════════════ -->
 <div class="footer">
-  <div class="footer-brand reveal">A Scuola di OpenCoesione</div>
-  <div class="footer-sub reveal s1">Monitoraggio civico e politiche di coesione — Infografica educativa 2026</div>
+  <div class="footer-top reveal">
+    <!-- ASOC Logo: light version for light theme, white for dark -->
+    <a href="https://www.ascuoladiopencoesione.it/" target="_blank" rel="noopener" title="A Scuola di OpenCoesione">
+      <img class="footer-logo for-light" src="assets/ASOC_logo2024_IT_RGB.png" alt="A Scuola di OpenCoesione" loading="lazy">
+      <img class="footer-logo for-dark" src="assets/ASOC_logo2024_IT_white.png" alt="A Scuola di OpenCoesione" loading="lazy">
+    </a>
+    <div class="footer-divider"></div>
+    <div class="footer-partners">
+      <div class="footer-partner-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        OpenCoesione
+      </div>
+      <div class="footer-partner-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        Monitoraggio Civico
+      </div>
+      <div class="footer-partner-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        Politiche di Coesione
+      </div>
+    </div>
+  </div>
+  <div class="footer-info reveal s1">
+    Infografica educativa — Indagine 2026 · Dati: <a href="https://opencoesione.gov.it" target="_blank">OpenCoesione</a>, SVIMEZ, ISTAT, RFI/Gruppo FS<br>
+    Progetto didattico nell'ambito di <a href="https://www.ascuoladiopencoesione.it/" target="_blank">A Scuola di OpenCoesione</a> (ASOC)
+  </div>
 </div>
 
 <!-- ═══════════════ JAVASCRIPT ═══════════════ -->

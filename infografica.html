@@ -82,6 +82,7 @@
 /* ═══════════════ RESET & BASE ═══════════════ */
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior: smooth; }
+html { overflow-x: hidden; }
 body {
   background: var(--bg-page);
   color: var(--text-primary);
@@ -90,7 +91,6 @@ body {
   line-height: 1.65;
   max-width: var(--max-w);
   margin: 0 auto;
-  overflow-x: hidden;
   transition: background var(--transition), color var(--transition);
   position: relative;
 }
@@ -481,8 +481,11 @@ body {
 /* ═══════════════ SERPENTINE RAILWAY TRACK ═══════════════ */
 .serpentine-container {
   position: absolute;
-  top: 0; left: 0;
-  width: 100%;
+  top: 0;
+  /* Stretch beyond the max-width body to cover full viewport */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
   height: 100%;
   pointer-events: none;
   z-index: 0;
@@ -495,64 +498,64 @@ body {
   height: 100%;
 }
 
-/* Outer ballast / gravel bed */
+/* Ballast bed — wide, subtle base */
 .track-ballast {
   fill: none;
   stroke: var(--c-blue);
-  stroke-width: 32;
+  stroke-width: 48;
   opacity: .035;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 [data-theme="dark"] .track-ballast { stroke: #CBD5E1; opacity: .025; }
 
-/* Sleepers / crossties — thick dashed */
+/* Sleepers / crossties */
 .track-ties {
   fill: none;
   stroke: var(--c-blue);
-  stroke-width: 22;
+  stroke-width: 34;
   opacity: .055;
   stroke-linecap: butt;
   stroke-dasharray: 4 16;
 }
 [data-theme="dark"] .track-ties { stroke: #94A3B8; opacity: .04; }
 
-/* Two parallel rails */
+/* Two parallel rails — visible steel lines */
 .track-rail-l, .track-rail-r {
   fill: none;
   stroke: var(--c-blue);
-  stroke-width: 2.5;
-  opacity: .12;
+  stroke-width: 3;
+  opacity: .18;
   stroke-linecap: round;
 }
 [data-theme="dark"] .track-rail-l,
-[data-theme="dark"] .track-rail-r { stroke: #94A3B8; opacity: .08; }
+[data-theme="dark"] .track-rail-r { stroke: #94A3B8; opacity: .12; }
 
-/* Animated progress glow */
+/* Animated progress — glow + sharp core */
 .track-progress {
   fill: none;
   stroke: url(#trackGradient);
-  stroke-width: 6;
+  stroke-width: 8;
   stroke-linecap: round;
-  opacity: .3;
+  opacity: .15;
   transition: stroke-dashoffset .1s linear;
-  filter: blur(.5px);
+  filter: blur(1.5px);
 }
 .track-progress-bright {
   fill: none;
   stroke: url(#trackGradient);
   stroke-width: 3;
   stroke-linecap: round;
-  opacity: .55;
+  opacity: .45;
   transition: stroke-dashoffset .1s linear;
 }
 
-/* Station dots — bigger, bolder */
+/* Station dots */
 .station-dot {
   fill: var(--bg-page);
   stroke: var(--c-blue);
   stroke-width: 3;
-  opacity: .2;
+  opacity: .18;
   transition: all .5s cubic-bezier(.16,1,.3,1);
 }
 .station-dot.active {
@@ -563,43 +566,42 @@ body {
 .station-dot.passed {
   fill: var(--c-teal);
   stroke: var(--c-teal);
-  opacity: .65;
+  opacity: .6;
 }
 
-/* Station ring pulse on active */
+/* Pulse ring on active station */
 .station-ring {
   fill: none;
   stroke: var(--c-amber);
-  stroke-width: 2;
+  stroke-width: 2.5;
   opacity: 0;
   transition: opacity .4s;
 }
 .station-ring.active {
-  opacity: .3;
+  opacity: .35;
   animation: stationPing 1.5s ease-out infinite;
 }
 @keyframes stationPing {
-  0% { r: 12; opacity: .3; }
-  100% { r: 28; opacity: 0; }
+  0% { r: 16; opacity: .35; }
+  100% { r: 38; opacity: 0; }
 }
 
-/* Train glow */
+/* Train glow — warm spot */
 .train-glow {
   fill: var(--c-amber);
   opacity: 0;
   animation: trainPulse 2s ease-in-out infinite;
 }
 @keyframes trainPulse {
-  0%,100% { opacity:.1; }
-  50% { opacity:.25; }
+  0%,100% { opacity:.08; }
+  50% { opacity:.2; }
 }
 
-/* Train icon — large and visible */
+/* Train icon */
 .train-icon {
-  filter: drop-shadow(0 3px 8px rgba(0,0,0,.2));
-  transition: transform .15s;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.2));
 }
-[data-theme="dark"] .train-icon { filter: drop-shadow(0 3px 10px rgba(0,0,0,.5)); }
+[data-theme="dark"] .train-icon { filter: drop-shadow(0 2px 8px rgba(0,0,0,.5)); }
 
 /* ═══════════════ DIVIDER ═══════════════ */
 .divider { height:1px; background:var(--border); margin:24px 0; }
@@ -646,24 +648,24 @@ body {
     <g id="stationsGroup"></g>
     <!-- train group -->
     <g id="trainGroup">
-      <circle class="train-glow" cx="0" cy="0" r="22"/>
-      <!-- Train SVG icon — a proper side-view locomotive -->
-      <g class="train-icon" transform="translate(-20,-16) scale(0.8)">
-        <rect x="2" y="8" width="46" height="22" rx="5" fill="#E8920D"/>
-        <rect x="38" y="4" width="14" height="26" rx="4" fill="#D4820B"/>
-        <rect x="7" y="12" width="8" height="7" rx="2" fill="white" opacity=".85"/>
-        <rect x="18" y="12" width="8" height="7" rx="2" fill="white" opacity=".85"/>
-        <rect x="29" y="12" width="8" height="7" rx="2" fill="white" opacity=".85"/>
-        <rect x="41" y="9" width="8" height="9" rx="2" fill="white" opacity=".7"/>
-        <circle cx="12" cy="34" r="5" fill="#1B3A5C"/>
-        <circle cx="28" cy="34" r="5" fill="#1B3A5C"/>
-        <circle cx="44" cy="34" r="5" fill="#1B3A5C"/>
-        <circle cx="12" cy="34" r="2" fill="white" opacity=".4"/>
-        <circle cx="28" cy="34" r="2" fill="white" opacity=".4"/>
-        <circle cx="44" cy="34" r="2" fill="white" opacity=".4"/>
-        <rect x="0" y="30" width="52" height="3" rx="1.5" fill="#1B3A5C" opacity=".3"/>
-        <circle cx="4" cy="14" r="3" fill="#FDE68A"/>
-        <rect x="4" y="2" width="4" height="6" rx="2" fill="#B06A08"/>
+      <circle class="train-glow" cx="0" cy="0" r="18"/>
+      <!-- Train SVG — compact, elegant -->
+      <g class="train-icon" transform="translate(-18,-12)">
+        <rect x="2" y="5" width="34" height="16" rx="4" fill="#E8920D"/>
+        <rect x="28" y="2" width="10" height="20" rx="3" fill="#D4820B"/>
+        <rect x="5" y="8" width="6" height="5" rx="1.5" fill="white" opacity=".85"/>
+        <rect x="13" y="8" width="6" height="5" rx="1.5" fill="white" opacity=".85"/>
+        <rect x="21" y="8" width="6" height="5" rx="1.5" fill="white" opacity=".85"/>
+        <rect x="30" y="5" width="6" height="7" rx="1.5" fill="white" opacity=".7"/>
+        <rect x="0" y="21" width="40" height="2.5" rx="1.2" fill="#1B3A5C" opacity=".3"/>
+        <circle cx="8" cy="25" r="3.5" fill="#1B3A5C"/>
+        <circle cx="20" cy="25" r="3.5" fill="#1B3A5C"/>
+        <circle cx="34" cy="25" r="3.5" fill="#1B3A5C"/>
+        <circle cx="8" cy="25" r="1.3" fill="white" opacity=".4"/>
+        <circle cx="20" cy="25" r="1.3" fill="white" opacity=".4"/>
+        <circle cx="34" cy="25" r="1.3" fill="white" opacity=".4"/>
+        <circle cx="3" cy="10" r="2.5" fill="#FDE68A"/>
+        <rect x="4" y="0" width="3.5" height="5" rx="1.8" fill="#B06A08"/>
       </g>
     </g>
   </svg>
@@ -701,7 +703,7 @@ body {
 </div>
 
 <!-- ═══════════════ SEZIONE 1 — CONTESTO ═══════════════ -->
-<div class="context-strip" data-station="0">
+<div class="context-strip">
   <div class="ctx-card reveal s1"><div class="big negative">−5,8%</div><div class="desc">Spopolamento prov. BN<br>2015–2021 (record)</div></div>
   <div class="ctx-card reveal s2"><div class="big negative">11.300</div><div class="desc">Giovani 15-34 emigrati<br>dalla prov. BN (2014–2024)</div></div>
   <div class="ctx-card reveal s3"><div class="big negative">−16,8%</div><div class="desc">Riduzione popolazione<br>giovanile nel Sannio</div></div>
@@ -709,7 +711,7 @@ body {
 </div>
 
 <!-- ═══════════════ SEZIONE 2 — IL CAMPIONE ═══════════════ -->
-<div class="section" data-station="1">
+<div class="section" data-station="0">
   <div class="sec-num reveal">02 — Il Campione</div>
   <div class="sec-title reveal s1">Chi ha risposto al questionario</div>
   <div class="sec-desc reveal s2">147 persone dell'hinterland beneventano. Età media 26 anni. Il questionario è stato somministrato senza rivelare l'obiettivo di correlazione con il progetto AV/AC.</div>
@@ -737,7 +739,7 @@ body {
 </div>
 
 <!-- ═══════════════ SEZIONE 3 — PERCEZIONE GRAVITÀ ═══════════════ -->
-<div class="section alt" data-station="2">
+<div class="section alt" data-station="1">
   <div class="sec-num reveal">03 — Percezione della Gravità</div>
   <div class="sec-title reveal s1">Quanto è grave lo spopolamento?</div>
   <div class="sec-desc reveal s2">Oltre la metà degli intervistati percepisce il fenomeno come grave o emergenziale.</div>
@@ -772,7 +774,7 @@ body {
 </div>
 
 <!-- ═══════════════ SEZIONE 4 — CAUSE ═══════════════ -->
-<div class="section" data-station="3">
+<div class="section" data-station="2">
   <div class="sec-num reveal">04 — Le Cause della Fuga</div>
   <div class="sec-title reveal s1">Perché si lascia il territorio?</div>
   <div class="sec-desc reveal s2">Domanda a risposta multipla (max 2). Il fattore dominante è la mancanza di lavoro qualificato.</div>
@@ -791,7 +793,7 @@ body {
 </div>
 
 <!-- ═══════════════ SEZIONE 5 — NODO TRASPORTI ═══════════════ -->
-<div class="section alt" data-station="4">
+<div class="section alt" data-station="3">
   <div class="sec-num reveal">05 — Il Nodo Trasporti</div>
   <div class="sec-title reveal s1">Quanto pesano i collegamenti?</div>
   <div class="sec-desc reveal s2">La carenza infrastrutturale è critica per oltre la metà del campione.</div>
@@ -823,7 +825,7 @@ body {
 </div>
 
 <!-- ═══════════════ SEZIONE 6 — PROGETTO AV/AC ═══════════════ -->
-<div class="rail-section" data-station="5">
+<div class="rail-section" data-station="4">
   <div class="sec-num reveal">06 — Il Progetto AV/AC Napoli–Bari</div>
   <div class="sec-title reveal s1">L'investimento che attraversa il Sannio</div>
   <div class="sec-desc reveal s2">La nuova linea rientra nel Corridoio TEN-T «Scandinavia–Mediterraneo». Attraversa il territorio beneventano: Frasso Telesino, Telese, Vitulano, Apice, Hirpinia.</div>
@@ -844,7 +846,7 @@ body {
 </div>
 
 <!-- ═══════════════ SEZIONE 7 — DIVARIO ═══════════════ -->
-<div class="section" data-station="6">
+<div class="section" data-station="5">
   <div class="sec-num reveal">07 — Il Divario Infrastrutturale</div>
   <div class="sec-title reveal s1">Perché il Sud ha bisogno di questa linea</div>
   <div class="sec-desc reveal s2">Dati SVIMEZ e ISTAT mostrano un gap strutturale confermato dalla percezione degli abitanti.</div>
@@ -863,7 +865,7 @@ body {
 </div>
 
 <!-- ═══════════════ SEZIONE 8 — FUTURO ═══════════════ -->
-<div class="section alt" data-station="7">
+<div class="section alt" data-station="6">
   <div class="sec-num reveal">08 — Visione del Futuro</div>
   <div class="sec-title reveal s1">Restare o partire? Cosa serve</div>
   <div class="sec-desc reveal s2">Una popolazione che non vuole andarsene, ma chiede condizioni concrete per restare.</div>
@@ -915,7 +917,7 @@ body {
 </div>
 
 <!-- ═══════════════ SEZIONE 8b — DIGITALE E TURISMO ═══════════════ -->
-<div class="section" data-station="8">
+<div class="section" data-station="7">
   <div class="sec-num reveal">08b — Digitale e Turismo</div>
   <div class="sec-title reveal s1">Soluzioni complementari all'infrastruttura</div>
   <div class="sec-desc reveal s2">Internet e turismo: complementi, non sostituti delle infrastrutture fisiche.</div>
@@ -948,7 +950,7 @@ body {
 </div>
 
 <!-- ═══════════════ SEZIONE 9 — SINTESI ═══════════════ -->
-<div class="conclusion" data-station="9">
+<div class="conclusion" data-station="8">
   <div class="sec-num reveal">09 — Sintesi Finale</div>
   <div class="sec-title reveal s1">La voce del territorio incontra il progetto</div>
   <div class="sec-desc reveal s2">Quattro numeri che sintetizzano la correlazione tra i dati del questionario e il progetto AV/AC.</div>
@@ -964,7 +966,7 @@ body {
 </div>
 
 <!-- ═══════════════ SEZIONE 10 — FONTI ═══════════════ -->
-<div class="sources" data-station="10">
+<div class="sources" data-station="9">
   <div class="sec-num reveal">10 — Fonti e Metodologia</div>
   <div class="sec-title reveal s1">Appendice: dati e fonti puntuali</div>
   <div class="sec-desc reveal s2">Ogni dato è tracciabile. I dati del questionario sono elaborazioni proprie; i dati di contesto provengono da fonti istituzionali.</div>
@@ -1122,7 +1124,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
     const svg=document.getElementById('serpentineSvg');
     const wrap=document.getElementById('serpentineWrap');
-    const bodyW=document.body.offsetWidth;
+    const bodyW=window.innerWidth; // full viewport width
     const bodyH=document.body.scrollHeight;
 
     svg.setAttribute('viewBox',`0 0 ${bodyW} ${bodyH}`);
@@ -1130,146 +1132,141 @@ document.addEventListener('DOMContentLoaded',()=>{
     svg.style.height=bodyH+'px';
     wrap.style.height=bodyH+'px';
 
-    // Collect station positions
+    // Station positions: Y = section top, X = alternating left/right EDGES
+    // On desktop (920px body centered in viewport), the margins are outside content
+    // On small screens, use far edges with a small inset so track is partially clipped but visible
     const points=[];
     sections.forEach((sec,i)=>{
-      const y=sec.offsetTop+sec.offsetHeight*0.4;
-      const margin=bodyW<500?30:bodyW<700?60:80;
-      const amplitude=bodyW<500?(bodyW*0.32):(bodyW*0.35);
-      const centerX=bodyW/2;
-      const x=centerX+(i%2===0?-1:1)*amplitude;
-      points.push({x:Math.max(margin,Math.min(bodyW-margin,x)), y});
+      const y=sec.offsetTop + 30;
+      let x;
+      if(bodyW <= 500){
+        x = i%2===0 ? 22 : bodyW-22;
+      } else if(bodyW <= 920){
+        x = i%2===0 ? 28 : bodyW-28;
+      } else {
+        // Desktop: place just outside the 920px content area
+        const marginW=(bodyW-920)/2;
+        const inset=Math.max(24, marginW*0.25);
+        x = i%2===0 ? inset : bodyW - inset;
+      }
+      points.push({x, y});
     });
 
-    // Build main center path
-    function buildPath(pts,startY){
-      let d=`M ${pts[0].x} ${startY}`;
-      for(let i=0;i<pts.length;i++){
+    // Build smooth S-curve path — starts and ends exactly on stations
+    function buildPath(pts){
+      if(pts.length<2) return '';
+      let d=`M ${pts[0].x} ${pts[0].y}`;
+      for(let i=1;i<pts.length;i++){
+        const prev=pts[i-1];
         const p=pts[i];
-        if(i===0){
-          d+=` C ${p.x} ${(startY+p.y)/2}, ${p.x} ${(startY+p.y)/2}, ${p.x} ${p.y}`;
-        } else {
-          const prev=pts[i-1];
-          const midY=(prev.y+p.y)/2;
-          d+=` C ${prev.x} ${midY}, ${p.x} ${midY}, ${p.x} ${p.y}`;
-        }
+        // For truly smooth S-curves: control points stay at their own X
+        // but Y is at 50% — this creates a perfect symmetric S
+        const midY=(prev.y+p.y)/2;
+        d+=` C ${prev.x} ${midY}, ${p.x} ${midY}, ${p.x} ${p.y}`;
       }
-      const last=pts[pts.length-1];
-      d+=` C ${last.x} ${last.y+80}, ${bodyW/2} ${last.y+140}, ${bodyW/2} ${last.y+180}`;
       return d;
     }
 
-    const mainPath=buildPath(points, points[0].y-80);
+    const mainPath=buildPath(points);
 
-    // For dual rails: offset the path slightly left and right
-    // We'll use the main path for ties/ballast/progress, and shift copies for rails
-    document.getElementById('trackBallast').setAttribute('d',mainPath);
-    document.getElementById('trackTies').setAttribute('d',mainPath);
-    document.getElementById('trackRailL').setAttribute('d',mainPath);
-    document.getElementById('trackRailR').setAttribute('d',mainPath);
-    // Offset rails via stroke-dashoffset trick won't work, use transform
-    document.getElementById('trackRailL').setAttribute('stroke-width','2.5');
-    document.getElementById('trackRailR').setAttribute('stroke-width','2.5');
-    // We simulate dual rails by setting the ballast wide and rails narrow
-    // The visual effect: ballast(32) > ties(22) > gap > rail-l + rail-r on edges
+    // Apply to all path elements
+    ['trackBallast','trackTies','trackRailL','trackRailR','trackProgress','trackProgressB'].forEach(id=>{
+      document.getElementById(id).setAttribute('d',mainPath);
+    });
 
+    // Rail styling
+    const railL=document.getElementById('trackRailL');
+    const railR=document.getElementById('trackRailR');
+    railL.setAttribute('stroke-width','3');
+    railL.style.opacity='.18';
+    railR.setAttribute('stroke-width','3');
+    railR.style.opacity='.18';
+
+    // Progress dash setup
     const progressPath=document.getElementById('trackProgress');
     const progressPathB=document.getElementById('trackProgressB');
-    progressPath.setAttribute('d',mainPath);
-    progressPathB.setAttribute('d',mainPath);
-
     const totalLen=progressPath.getTotalLength();
     progressPath.style.strokeDasharray=totalLen;
     progressPath.style.strokeDashoffset=totalLen;
     progressPathB.style.strokeDasharray=totalLen;
     progressPathB.style.strokeDashoffset=totalLen;
 
-    // Create station dots (no labels — section titles are enough)
+    // Station dots (no labels)
     const group=document.getElementById('stationsGroup');
     group.innerHTML='';
     points.forEach((p,i)=>{
       // Ping ring
       const ring=document.createElementNS('http://www.w3.org/2000/svg','circle');
-      ring.setAttribute('cx',p.x);
-      ring.setAttribute('cy',p.y);
-      ring.setAttribute('r','12');
+      ring.setAttribute('cx',p.x); ring.setAttribute('cy',p.y);
+      ring.setAttribute('r','14');
       ring.setAttribute('class','station-ring');
       ring.dataset.idx=i;
       group.appendChild(ring);
       // Main dot
       const circle=document.createElementNS('http://www.w3.org/2000/svg','circle');
-      circle.setAttribute('cx',p.x);
-      circle.setAttribute('cy',p.y);
-      circle.setAttribute('r','9');
+      circle.setAttribute('cx',p.x); circle.setAttribute('cy',p.y);
+      circle.setAttribute('r','10');
       circle.setAttribute('class','station-dot');
       circle.dataset.idx=i;
       group.appendChild(circle);
       // Inner white dot
       const inner=document.createElementNS('http://www.w3.org/2000/svg','circle');
-      inner.setAttribute('cx',p.x);
-      inner.setAttribute('cy',p.y);
-      inner.setAttribute('r','3.5');
-      inner.setAttribute('fill','white');
-      inner.setAttribute('opacity','0');
+      inner.setAttribute('cx',p.x); inner.setAttribute('cy',p.y);
+      inner.setAttribute('r','4');
+      inner.setAttribute('fill','white'); inner.setAttribute('opacity','0');
       inner.setAttribute('class','station-inner');
       inner.dataset.idx=i;
       group.appendChild(inner);
     });
 
-    return {progressPath, progressPathB, totalLen, points};
+    return {progressPath, progressPathB, totalLen, points, firstY: points[0].y, lastY: points[points.length-1].y};
   }
 
   let serpData=null;
-  setTimeout(()=>{
-    serpData=buildSerpentine();
-    if(serpData) updateSerpentine();
-  },400);
+  setTimeout(()=>{ serpData=buildSerpentine(); if(serpData) updateSerpentine(); },400);
 
   let resizeTimer;
   window.addEventListener('resize',()=>{
     clearTimeout(resizeTimer);
-    resizeTimer=setTimeout(()=>{serpData=buildSerpentine();if(serpData)updateSerpentine();},250);
+    resizeTimer=setTimeout(()=>{ serpData=buildSerpentine(); if(serpData) updateSerpentine(); },250);
   });
 
   function updateSerpentine(){
     if(!serpData) return;
-    const {progressPath, progressPathB, totalLen, points}=serpData;
-    const scrollH=document.documentElement.scrollHeight-window.innerHeight;
-    const scrollP=scrollH>0?Math.min(window.scrollY/scrollH,1):0;
+    const {progressPath, progressPathB, totalLen, points, firstY, lastY}=serpData;
 
-    // Progress line
+    // Map the current viewport center to a position along the path
+    // The path spans from firstY (top of first section) to lastY (end)
+    const viewCenter=window.scrollY + window.innerHeight * 0.45;
+    const pathRange=lastY-firstY;
+    const scrollP=pathRange>0 ? Math.max(0, Math.min(1, (viewCenter-firstY)/pathRange)) : 0;
+
+    // Progress
     const offset=totalLen*(1-scrollP);
     progressPath.style.strokeDashoffset=offset;
     progressPathB.style.strokeDashoffset=offset;
 
-    // Train position + rotation along path
+    // Train position + tangent rotation
     const dist=totalLen*scrollP;
     const pt=progressPath.getPointAtLength(dist);
-    const ptAhead=progressPath.getPointAtLength(Math.min(dist+8,totalLen));
+    const ptAhead=progressPath.getPointAtLength(Math.min(dist+10,totalLen));
     const angle=Math.atan2(ptAhead.y-pt.y, ptAhead.x-pt.x)*180/Math.PI;
 
-    const trainGroup=document.getElementById('trainGroup');
-    trainGroup.setAttribute('transform',`translate(${pt.x},${pt.y}) rotate(${angle})`);
+    document.getElementById('trainGroup')
+      .setAttribute('transform',`translate(${pt.x},${pt.y}) rotate(${angle})`);
 
     // Station states
     document.querySelectorAll('.station-dot').forEach(dot=>{
-      const i=parseInt(dot.dataset.idx);
-      const sp=i/(points.length-1);
-      dot.classList.remove('active','passed');
-      if(Math.abs(scrollP-sp)<0.035) dot.classList.add('active');
-      else if(scrollP>sp) dot.classList.add('passed');
+      const i=+dot.dataset.idx, sp=i/(points.length-1);
+      dot.classList.toggle('active', Math.abs(scrollP-sp)<0.035);
+      dot.classList.toggle('passed', scrollP>sp+0.035);
     });
-    document.querySelectorAll('.station-ring').forEach(ring=>{
-      const i=parseInt(ring.dataset.idx);
-      const sp=i/(points.length-1);
-      ring.classList.toggle('active', Math.abs(scrollP-sp)<0.035);
+    document.querySelectorAll('.station-ring').forEach(r=>{
+      r.classList.toggle('active', Math.abs(scrollP-(+r.dataset.idx)/(points.length-1))<0.035);
     });
     document.querySelectorAll('.station-inner').forEach(inner=>{
-      const i=parseInt(inner.dataset.idx);
-      const sp=i/(points.length-1);
-      const isActive=Math.abs(scrollP-sp)<0.035;
-      const isPassed=scrollP>sp && !isActive;
-      inner.setAttribute('opacity', (isActive||isPassed)?'.6':'0');
+      const sp=(+inner.dataset.idx)/(points.length-1);
+      inner.setAttribute('opacity', (scrollP>sp-0.035)?'.6':'0');
     });
   }
 

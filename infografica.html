@@ -304,10 +304,12 @@ body {
 .hbar-fill {
   height:100%; border-radius:6px; display:flex; align-items:center;
   padding-left:12px; font-family:var(--font-mono); font-size:12px; font-weight:700;
-  color:#fff; position:relative; overflow:hidden;
+  color:#fff; position:relative; overflow:visible; white-space:nowrap;
   transition: width 1.2s cubic-bezier(.16,1,.3,1);
 }
-.hbar-fill::after { content:''; position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(90deg,transparent 50%,rgba(255,255,255,.12)); }
+.hbar-fill.short-bar { color:var(--text-primary); padding-left:0; }
+.hbar-fill.short-bar .bar-val { position:relative; left:calc(100% + 8px); }
+.hbar-fill::after { content:''; position:absolute; top:0; left:0; width:100%; height:100%; border-radius:6px; background:linear-gradient(90deg,transparent 50%,rgba(255,255,255,.12)); pointer-events:none; }
 .hbar-fill.amber { background:linear-gradient(90deg,#C07A08,var(--c-amber)); }
 .hbar-fill.red { background:linear-gradient(90deg,#B5382A,var(--c-red)); }
 .hbar-fill.teal { background:linear-gradient(90deg,#0A8580,var(--c-teal)); }
@@ -560,10 +562,10 @@ body {
 
   <div class="hbar reveal s3" data-bars>
     <div class="hbar-title">D1. A cosa pensi quando senti "spopolamento"?</div>
-    <div class="hbar-row"><div class="hbar-label">Amici/parenti verso grandi città</div><div class="hbar-track"><div class="hbar-fill amber" data-w="49.7%" style="width:0">49,7%</div></div></div>
-    <div class="hbar-row"><div class="hbar-label">Case abbandonate e saracinesche</div><div class="hbar-track"><div class="hbar-fill red" data-w="32.7%" style="width:0">32,7%</div></div></div>
-    <div class="hbar-row"><div class="hbar-label">Difficoltà a trovare coetanei</div><div class="hbar-track"><div class="hbar-fill teal" data-w="10.9%" style="width:0">10,9%</div></div></div>
-    <div class="hbar-row"><div class="hbar-label">Processo naturale</div><div class="hbar-track"><div class="hbar-fill sky" data-w="6.8%" style="width:0">6,8%</div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Amici/parenti verso grandi città</div><div class="hbar-track"><div class="hbar-fill amber" data-w="49.7%" style="width:0"><span class="bar-val">49,7%</span></div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Case abbandonate e saracinesche</div><div class="hbar-track"><div class="hbar-fill red" data-w="32.7%" style="width:0"><span class="bar-val">32,7%</span></div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Difficoltà a trovare coetanei</div><div class="hbar-track"><div class="hbar-fill teal" data-w="10.9%" style="width:0"><span class="bar-val">10,9%</span></div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Processo naturale</div><div class="hbar-track"><div class="hbar-fill sky" data-w="6.8%" style="width:0"><span class="bar-val">6,8%</span></div></div></div>
   </div>
 
   <div class="insight-box reveal s4">
@@ -579,10 +581,10 @@ body {
   <div class="sec-desc reveal s2">Domanda a risposta multipla (max 2). Il fattore dominante è la mancanza di lavoro qualificato.</div>
 
   <div class="hbar reveal s2" data-bars>
-    <div class="hbar-row"><div class="hbar-label">Mancanza di sbocchi lavorativi</div><div class="hbar-track"><div class="hbar-fill amber" data-w="93.2%" style="width:0">93,2%</div></div></div>
-    <div class="hbar-row"><div class="hbar-label">Scarsa offerta culturale e svago</div><div class="hbar-track"><div class="hbar-fill violet" data-w="38.1%" style="width:0">38,1%</div></div></div>
-    <div class="hbar-row"><div class="hbar-label">Carenza di trasporti</div><div class="hbar-track"><div class="hbar-fill red" data-w="34.0%" style="width:0">34,0%</div></div></div>
-    <div class="hbar-row"><div class="hbar-label">Digital divide</div><div class="hbar-track"><div class="hbar-fill sky" data-w="5.4%" style="width:0">5,4%</div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Mancanza di sbocchi lavorativi</div><div class="hbar-track"><div class="hbar-fill amber" data-w="93.2%" style="width:0"><span class="bar-val">93,2%</span></div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Scarsa offerta culturale e svago</div><div class="hbar-track"><div class="hbar-fill violet" data-w="38.1%" style="width:0"><span class="bar-val">38,1%</span></div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Carenza di trasporti</div><div class="hbar-track"><div class="hbar-fill red" data-w="34.0%" style="width:0"><span class="bar-val">34,0%</span></div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Digital divide</div><div class="hbar-track"><div class="hbar-fill sky" data-w="5.4%" style="width:0"><span class="bar-val">5,4%</span></div></div></div>
   </div>
 
   <div class="corr-box reveal s3">
@@ -693,20 +695,20 @@ body {
 
   <div class="hbar reveal s3" data-bars>
     <div class="hbar-title">D7. Settore per il rilancio</div>
-    <div class="hbar-row"><div class="hbar-label">Turismo sostenibile e borghi</div><div class="hbar-track"><div class="hbar-fill amber" data-w="34.0%" style="width:0">34,0%</div></div></div>
-    <div class="hbar-row"><div class="hbar-label">Smart working da remoto</div><div class="hbar-track"><div class="hbar-fill teal" data-w="27.9%" style="width:0">27,9%</div></div></div>
-    <div class="hbar-row"><div class="hbar-label">Artigianato digitale</div><div class="hbar-track"><div class="hbar-fill violet" data-w="20.4%" style="width:0">20,4%</div></div></div>
-    <div class="hbar-row"><div class="hbar-label">Agricoltura tecnologica / km zero</div><div class="hbar-track"><div class="hbar-fill green" data-w="17.7%" style="width:0">17,7%</div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Turismo sostenibile e borghi</div><div class="hbar-track"><div class="hbar-fill amber" data-w="34.0%" style="width:0"><span class="bar-val">34,0%</span></div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Smart working da remoto</div><div class="hbar-track"><div class="hbar-fill teal" data-w="27.9%" style="width:0"><span class="bar-val">27,9%</span></div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Artigianato digitale</div><div class="hbar-track"><div class="hbar-fill violet" data-w="20.4%" style="width:0"><span class="bar-val">20,4%</span></div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Agricoltura tecnologica / km zero</div><div class="hbar-track"><div class="hbar-fill green" data-w="17.7%" style="width:0"><span class="bar-val">17,7%</span></div></div></div>
   </div>
 
   <div class="divider"></div>
 
   <div class="hbar reveal s3" data-bars>
     <div class="hbar-title">D10. Intervento più urgente</div>
-    <div class="hbar-row"><div class="hbar-label">Incentivi giovani imprenditori</div><div class="hbar-track"><div class="hbar-fill amber" data-w="53.7%" style="width:0">53,7%</div></div></div>
-    <div class="hbar-row"><div class="hbar-label">Più mezzi pubblici e collegamenti</div><div class="hbar-track"><div class="hbar-fill red" data-w="23.8%" style="width:0">23,8%</div></div></div>
-    <div class="hbar-row"><div class="hbar-label">Scuole e centri medici</div><div class="hbar-track"><div class="hbar-fill teal" data-w="14.3%" style="width:0">14,3%</div></div></div>
-    <div class="hbar-row"><div class="hbar-label">Spazi aggregazione e co-working</div><div class="hbar-track"><div class="hbar-fill sky" data-w="8.2%" style="width:0">8,2%</div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Incentivi giovani imprenditori</div><div class="hbar-track"><div class="hbar-fill amber" data-w="53.7%" style="width:0"><span class="bar-val">53,7%</span></div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Più mezzi pubblici e collegamenti</div><div class="hbar-track"><div class="hbar-fill red" data-w="23.8%" style="width:0"><span class="bar-val">23,8%</span></div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Scuole e centri medici</div><div class="hbar-track"><div class="hbar-fill teal" data-w="14.3%" style="width:0"><span class="bar-val">14,3%</span></div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Spazi aggregazione e co-working</div><div class="hbar-track"><div class="hbar-fill sky" data-w="8.2%" style="width:0"><span class="bar-val">8,2%</span></div></div></div>
   </div>
 
   <div class="corr-box reveal s4">
@@ -725,19 +727,19 @@ body {
     <div class="card reveal-left s2">
       <div class="card-label">D8. Internet può frenare lo spopolamento?</div>
       <div class="hbar" data-bars style="margin:0">
-        <div class="hbar-row"><div class="hbar-label" style="width:150px;font-size:12px">Fondamentale</div><div class="hbar-track"><div class="hbar-fill teal" data-w="28.6%" style="width:0">28,6%</div></div></div>
-        <div class="hbar-row"><div class="hbar-label" style="width:150px;font-size:12px">Utile, ma servono treni</div><div class="hbar-track"><div class="hbar-fill amber" data-w="29.9%" style="width:0">29,9%</div></div></div>
-        <div class="hbar-row"><div class="hbar-label" style="width:150px;font-size:12px">Poca influenza</div><div class="hbar-track"><div class="hbar-fill red" data-w="35.4%" style="width:0">35,4%</div></div></div>
-        <div class="hbar-row" style="margin:0"><div class="hbar-label" style="width:150px;font-size:12px">Non saprei</div><div class="hbar-track"><div class="hbar-fill sky" data-w="6.1%" style="width:0">6,1%</div></div></div>
+        <div class="hbar-row"><div class="hbar-label" style="width:150px;font-size:12px">Fondamentale</div><div class="hbar-track"><div class="hbar-fill teal" data-w="28.6%" style="width:0"><span class="bar-val">28,6%</span></div></div></div>
+        <div class="hbar-row"><div class="hbar-label" style="width:150px;font-size:12px">Utile, ma servono treni</div><div class="hbar-track"><div class="hbar-fill amber" data-w="29.9%" style="width:0"><span class="bar-val">29,9%</span></div></div></div>
+        <div class="hbar-row"><div class="hbar-label" style="width:150px;font-size:12px">Poca influenza</div><div class="hbar-track"><div class="hbar-fill red" data-w="35.4%" style="width:0"><span class="bar-val">35,4%</span></div></div></div>
+        <div class="hbar-row" style="margin:0"><div class="hbar-label" style="width:150px;font-size:12px">Non saprei</div><div class="hbar-track"><div class="hbar-fill sky" data-w="6.1%" style="width:0"><span class="bar-val">6,1%</span></div></div></div>
       </div>
     </div>
     <div class="card reveal-right s3">
       <div class="card-label">D9. Il turismo è una soluzione reale?</div>
       <div class="hbar" data-bars style="margin:0">
-        <div class="hbar-row"><div class="hbar-label" style="width:150px;font-size:12px">Soluzione reale</div><div class="hbar-track"><div class="hbar-fill teal" data-w="38.1%" style="width:0">38,1%</div></div></div>
-        <div class="hbar-row"><div class="hbar-label" style="width:150px;font-size:12px">Solo aiuto temporaneo</div><div class="hbar-track"><div class="hbar-fill amber" data-w="34.0%" style="width:0">34,0%</div></div></div>
-        <div class="hbar-row"><div class="hbar-label" style="width:150px;font-size:12px">Utile se non stravolge</div><div class="hbar-track"><div class="hbar-fill red" data-w="21.8%" style="width:0">21,8%</div></div></div>
-        <div class="hbar-row" style="margin:0"><div class="hbar-label" style="width:150px;font-size:12px">Rischio «musei vuoti»</div><div class="hbar-track"><div class="hbar-fill sky" data-w="6.1%" style="width:0">6,1%</div></div></div>
+        <div class="hbar-row"><div class="hbar-label" style="width:150px;font-size:12px">Soluzione reale</div><div class="hbar-track"><div class="hbar-fill teal" data-w="38.1%" style="width:0"><span class="bar-val">38,1%</span></div></div></div>
+        <div class="hbar-row"><div class="hbar-label" style="width:150px;font-size:12px">Solo aiuto temporaneo</div><div class="hbar-track"><div class="hbar-fill amber" data-w="34.0%" style="width:0"><span class="bar-val">34,0%</span></div></div></div>
+        <div class="hbar-row"><div class="hbar-label" style="width:150px;font-size:12px">Utile se non stravolge</div><div class="hbar-track"><div class="hbar-fill red" data-w="21.8%" style="width:0"><span class="bar-val">21,8%</span></div></div></div>
+        <div class="hbar-row" style="margin:0"><div class="hbar-label" style="width:150px;font-size:12px">Rischio «musei vuoti»</div><div class="hbar-track"><div class="hbar-fill sky" data-w="6.1%" style="width:0"><span class="bar-val">6,1%</span></div></div></div>
       </div>
     </div>
   </div>
@@ -838,6 +840,8 @@ document.addEventListener('DOMContentLoaded',()=>{
       if(e.isIntersecting){
         const fills=e.target.querySelectorAll('.hbar-fill');
         fills.forEach((f,i)=>{
+          const pct=parseFloat(f.dataset.w);
+          if(pct<18) f.classList.add('short-bar');
           setTimeout(()=>{f.style.width=f.dataset.w},i*120);
         });
         barObs.unobserve(e.target);

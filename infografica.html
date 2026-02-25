@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spopolamento e Alta Capacità Napoli–Bari — A Scuola di OpenCoesione 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════ THEME VARIABLES ═══════════════ */
+:root {
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --max-w: 920px;
+  --radius: 14px;
+  --radius-sm: 8px;
+  --transition: .3s cubic-bezier(.4,0,.2,1);
+  /* Accent colors (shared) */
+  --c-blue: #1B3A5C;
+  --c-amber: #E8920D;
+  --c-amber-light: #F5A623;
+  --c-teal: #0EA5A0;
+  --c-red: #D94432;
+  --c-violet: #7C5CFC;
+  --c-green: #16A34A;
+}
+
+[data-theme="light"] {
+  --bg-page: #FAFAF7;
+  --bg-card: #FFFFFF;
+  --bg-card-alt: #F5F3EE;
+  --bg-hero: linear-gradient(170deg, #1B3A5C 0%, #234B73 40%, #2D5F8A 100%);
+  --bg-hero-text: #FFFFFF;
+  --bg-section-alt: #F0EDE6;
+  --bg-rail: linear-gradient(170deg, #1A2F4A, #23466B);
+  --text-primary: #1A1A1A;
+  --text-secondary: #4A4A4A;
+  --text-tertiary: #7A7A7A;
+  --text-on-dark: #FFFFFF;
+  --border: rgba(0,0,0,.08);
+  --border-accent: rgba(232,146,13,.25);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md: 0 4px 14px rgba(0,0,0,.07), 0 2px 6px rgba(0,0,0,.04);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,.08);
+  --amber-dim: rgba(232,146,13,.08);
+  --teal-dim: rgba(14,165,160,.07);
+  --red-dim: rgba(217,68,50,.06);
+  --violet-dim: rgba(124,92,252,.06);
+  --blue-dim: rgba(27,58,92,.05);
+  --bar-track: rgba(0,0,0,.04);
+  --donut-track: rgba(0,0,0,.06);
+  --icon-filter: none;
+}
+
+[data-theme="dark"] {
+  --bg-page: #0B1120;
+  --bg-card: #111827;
+  --bg-card-alt: #0F1729;
+  --bg-hero: linear-gradient(170deg, #0B1120 0%, #111D35 40%, #162A4A 100%);
+  --bg-hero-text: #F1F5F9;
+  --bg-section-alt: #0F1729;
+  --bg-rail: linear-gradient(170deg, #0D1525, #132240);
+  --text-primary: #E8ECF1;
+  --text-secondary: #94A3B8;
+  --text-tertiary: #64748B;
+  --text-on-dark: #F1F5F9;
+  --border: rgba(255,255,255,.06);
+  --border-accent: rgba(232,146,13,.2);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.3);
+  --shadow-md: 0 4px 14px rgba(0,0,0,.4);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,.5);
+  --amber-dim: rgba(232,146,13,.1);
+  --teal-dim: rgba(14,165,160,.1);
+  --red-dim: rgba(217,68,50,.08);
+  --violet-dim: rgba(124,92,252,.08);
+  --blue-dim: rgba(27,58,92,.15);
+  --bar-track: rgba(255,255,255,.04);
+  --donut-track: rgba(255,255,255,.06);
+  --icon-filter: brightness(1.3);
+}
+
+/* ═══════════════ RESET & BASE ═══════════════ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  overflow-x: hidden;
+  transition: background var(--transition), color var(--transition);
+}
+
+/* ═══════════════ THEME TOGGLE ═══════════════ */
+.theme-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 999;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.25);
+  background: rgba(0,0,0,.2);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  transition: all var(--transition);
+  color: #fff;
+}
+.theme-toggle:hover { transform: scale(1.1); border-color: var(--c-amber); }
+[data-theme="dark"] .theme-toggle { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.15); }
+
+/* ═══════════════ ANIMATIONS ═══════════════ */
+.reveal { opacity:0; transform:translateY(36px); transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+.reveal.visible { opacity:1; transform:translateY(0); }
+.reveal-left { opacity:0; transform:translateX(-40px); transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+.reveal-left.visible { opacity:1; transform:translateX(0); }
+.reveal-right { opacity:0; transform:translateX(40px); transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+.reveal-right.visible { opacity:1; transform:translateX(0); }
+.reveal-scale { opacity:0; transform:scale(.88); transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+.reveal-scale.visible { opacity:1; transform:scale(1); }
+.s1{transition-delay:.06s}.s2{transition-delay:.13s}.s3{transition-delay:.2s}.s4{transition-delay:.28s}.s5{transition-delay:.36s}
+
+@keyframes pulse-dot { 0%,100%{box-shadow:0 0 0 0 rgba(232,146,13,.5)} 50%{box-shadow:0 0 0 8px rgba(232,146,13,0)} }
+@keyframes train-move { 0%{transform:translateX(0)} 100%{transform:translateX(-48px)} }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+@keyframes count-fade { 0%{opacity:0;transform:scale(.7)} 100%{opacity:1;transform:scale(1)} }
+
+/* ═══════════════ HERO ═══════════════ */
+.hero {
+  background: var(--bg-hero);
+  padding: 72px 48px 64px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0 0 24px 24px;
+}
+.hero-bg-shape {
+  position: absolute;
+  border-radius: 50%;
+  opacity: .12;
+}
+.hero-bg-shape.a { width:400px; height:400px; top:-120px; right:-80px; background:radial-gradient(circle, var(--c-amber), transparent 70%); animation: float 8s ease-in-out infinite; }
+.hero-bg-shape.b { width:300px; height:300px; bottom:-80px; left:-60px; background:radial-gradient(circle, var(--c-teal), transparent 70%); animation: float 10s ease-in-out infinite reverse; }
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 24px;
+  padding: 8px 20px;
+  font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--c-amber-light);
+  position: relative; z-index: 1;
+  margin-bottom: 32px;
+}
+.hero-badge .dot { width:7px; height:7px; background:var(--c-amber-light); border-radius:50%; animation: pulse-dot 2s ease-in-out infinite; }
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 900; font-size: 52px; line-height: 1.1;
+  color: var(--bg-hero-text);
+  max-width: 680px;
+  position: relative; z-index: 1;
+  letter-spacing: -.5px;
+}
+.hero h1 .hl {
+  color: var(--c-amber-light);
+  position: relative;
+  display: inline;
+}
+.hero-sub {
+  font-size: 17px; color: rgba(255,255,255,.7); line-height: 1.7;
+  max-width: 620px; margin-top: 20px;
+  position: relative; z-index: 1;
+}
+.hero-meta {
+  display: flex; gap: 32px; margin-top: 40px; flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+.hero-meta-item { display:flex; flex-direction:column; gap:3px; }
+.hero-meta-item .label { font-size:10px; text-transform:uppercase; letter-spacing:2px; color:rgba(255,255,255,.45); font-weight:600; }
+.hero-meta-item .value { font-family:var(--font-mono); font-size:14px; font-weight:600; color:var(--c-amber-light); }
+.hero-train-line {
+  position: absolute; bottom:0; left:0; width:200%; height:4px;
+  background: repeating-linear-gradient(90deg, var(--c-red) 0px, var(--c-red) 28px, transparent 28px, transparent 40px);
+  animation: train-move 2.5s linear infinite;
+}
+
+/* ═══════════════ SVG TRAIN ICON ═══════════════ */
+.train-svg { position:absolute; bottom:20px; right:48px; z-index:1; opacity:.18; }
+[data-theme="dark"] .train-svg { opacity:.1; }
+
+/* ═══════════════ CONTEXT STRIP ═══════════════ */
+.context-strip {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+  padding: 36px 48px;
+  background: var(--bg-card-alt);
+  border-bottom: 1px solid var(--border);
+}
+.ctx-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 16px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.ctx-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); }
+.ctx-card .big { font-family:var(--font-display); font-size:36px; font-weight:900; color:var(--c-amber); line-height:1; }
+.ctx-card .big.negative { color:var(--c-red); }
+.ctx-card .big.positive { color:var(--c-teal); }
+.ctx-card .desc { font-size:12px; color:var(--text-tertiary); margin-top:8px; line-height:1.45; }
+
+/* ═══════════════ SECTIONS ═══════════════ */
+.section { padding:56px 48px; position:relative; }
+.section + .section { border-top:1px solid var(--border); }
+.section.alt { background:var(--bg-section-alt); }
+.sec-num {
+  font-family:var(--font-mono); font-size:12px; font-weight:600;
+  color:var(--c-amber); letter-spacing:3px; text-transform:uppercase;
+  margin-bottom:10px;
+}
+.sec-title {
+  font-family:var(--font-display); font-size:32px; font-weight:800;
+  line-height:1.2; margin-bottom:10px; letter-spacing:-.3px;
+  color:var(--text-primary);
+}
+.sec-desc {
+  font-size:15px; color:var(--text-secondary); margin-bottom:32px;
+  line-height:1.7; max-width:680px;
+}
+
+/* ═══════════════ CARDS & BOXES ═══════════════ */
+.card {
+  background:var(--bg-card); border:1px solid var(--border);
+  border-radius:var(--radius); padding:24px;
+  box-shadow:var(--shadow-sm);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.card:hover { transform:translateY(-2px); box-shadow:var(--shadow-md); }
+
+.row { display:flex; gap:20px; margin-bottom:24px; }
+.row > * { flex:1; }
+
+/* Gender bar */
+.gender-bar { display:flex; height:34px; border-radius:var(--radius-sm); overflow:hidden; margin-bottom:10px; }
+.gender-bar .male { background:var(--c-blue); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; color:#fff; }
+.gender-bar .female { background:var(--c-red); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; color:#fff; }
+.gender-bar .other { background:var(--text-tertiary); }
+.gender-legend { display:flex; gap:18px; font-size:13px; color:var(--text-secondary); }
+.gender-legend span::before { content:'●'; margin-right:6px; font-size:9px; }
+.gender-legend .m::before { color:var(--c-blue); }
+.gender-legend .f::before { color:var(--c-red); }
+
+/* Age bars */
+.age-bars { display:flex; align-items:flex-end; gap:10px; height:120px; padding-top:10px; }
+.age-col { flex:1; display:flex; flex-direction:column; align-items:center; gap:5px; }
+.age-fill { width:100%; border-radius:6px 6px 0 0; min-height:2px; transition: height 1s cubic-bezier(.16,1,.3,1); }
+.age-col .pct { font-family:var(--font-mono); font-size:12px; font-weight:600; }
+.age-col .lbl { font-size:11px; color:var(--text-tertiary); font-weight:500; }
+.card-label {
+  font-size:11px; text-transform:uppercase; letter-spacing:2px;
+  color:var(--text-tertiary); margin-bottom:14px; font-weight:600;
+}
+
+/* ═══════════════ GRAVITY METER ═══════════════ */
+.gravity-meter { display:flex; gap:8px; margin-bottom:16px; }
+.g-block {
+  flex:1; text-align:center; padding:18px 8px; border-radius:12px;
+  border:1px solid var(--border); background:var(--bg-card);
+  box-shadow:var(--shadow-sm);
+  transition: transform var(--transition);
+}
+.g-block:hover { transform:translateY(-2px); }
+.g-block .score { font-family:var(--font-display); font-size:28px; font-weight:800; }
+.g-block .gpct { font-family:var(--font-mono); font-size:13px; margin-top:3px; font-weight:600; }
+.g-block .glbl { font-size:10px; color:var(--text-tertiary); margin-top:4px; }
+.g-block.lv1 .score,.g-block.lv1 .gpct { color:var(--c-teal); }
+.g-block.lv2 .score,.g-block.lv2 .gpct { color:#3B9FD4; }
+.g-block.lv3 .score,.g-block.lv3 .gpct { color:var(--c-violet); }
+.g-block.lv4 .score,.g-block.lv4 .gpct { color:var(--c-amber); }
+.g-block.lv5 .score,.g-block.lv5 .gpct { color:var(--c-red); }
+
+.avg-box {
+  background:var(--amber-dim); border:1px solid var(--border-accent);
+  border-radius:var(--radius); padding:22px 28px;
+  display:flex; align-items:center; gap:22px; margin-top:18px;
+}
+.avg-box .avg-num { font-family:var(--font-display); font-size:48px; font-weight:900; color:var(--c-amber); line-height:1; flex-shrink:0; }
+.avg-box .avg-text { font-size:14px; color:var(--text-secondary); line-height:1.7; }
+.avg-box .avg-text strong { color:var(--c-amber); }
+
+/* ═══════════════ HORIZONTAL BAR CHARTS ═══════════════ */
+.hbar { margin-bottom:20px; }
+.hbar-title { font-size:12px; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:2px; margin-bottom:16px; font-weight:600; }
+.hbar-row { display:flex; align-items:center; margin-bottom:12px; gap:14px; }
+.hbar-label { width:240px; font-size:13px; color:var(--text-secondary); text-align:right; flex-shrink:0; line-height:1.35; font-weight:500; }
+.hbar-track { flex:1; height:32px; background:var(--bar-track); border-radius:6px; overflow:hidden; }
+.hbar-fill {
+  height:100%; border-radius:6px; display:flex; align-items:center;
+  padding-left:12px; font-family:var(--font-mono); font-size:12px; font-weight:700;
+  color:#fff; position:relative; overflow:hidden;
+  transition: width 1.2s cubic-bezier(.16,1,.3,1);
+}
+.hbar-fill::after { content:''; position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(90deg,transparent 50%,rgba(255,255,255,.12)); }
+.hbar-fill.amber { background:linear-gradient(90deg,#C07A08,var(--c-amber)); }
+.hbar-fill.red { background:linear-gradient(90deg,#B5382A,var(--c-red)); }
+.hbar-fill.teal { background:linear-gradient(90deg,#0A8580,var(--c-teal)); }
+.hbar-fill.sky { background:linear-gradient(90deg,#2872A8,#3B9FD4); }
+.hbar-fill.violet { background:linear-gradient(90deg,#6348CC,var(--c-violet)); }
+.hbar-fill.green { background:linear-gradient(90deg,#138A3E,var(--c-green)); }
+.hbar-fill.blue { background:linear-gradient(90deg,#15325A,var(--c-blue)); }
+
+/* ═══════════════ INSIGHT & CORRELATION BOXES ═══════════════ */
+.insight-box {
+  background:var(--teal-dim); border:1px solid rgba(14,165,160,.15);
+  border-left:4px solid var(--c-teal);
+  border-radius:0 var(--radius) var(--radius) 0;
+  padding:22px 26px; margin:24px 0;
+}
+.insight-box .ib-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:var(--c-teal); margin-bottom:8px; }
+.insight-box p { font-size:14px; color:var(--text-secondary); line-height:1.7; }
+.insight-box p strong { color:var(--text-primary); font-weight:700; }
+
+.corr-box {
+  background:var(--amber-dim); border:1px solid var(--border-accent);
+  border-radius:var(--radius); padding:28px; margin:28px 0;
+}
+.corr-box .cb-head { display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+.corr-box .cb-icon {
+  width:40px; height:40px; background:var(--amber-dim); border:1px solid rgba(232,146,13,.18);
+  border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px;
+}
+.corr-box .cb-title { font-family:var(--font-display); font-size:20px; font-weight:700; color:var(--text-primary); }
+.corr-box .cb-body { font-size:14px; color:var(--text-secondary); line-height:1.8; }
+.corr-box .cb-body strong { color:var(--c-amber); font-weight:700; }
+
+/* ═══════════════ DONUT CHARTS ═══════════════ */
+.donut-row { display:flex; gap:32px; align-items:center; margin:24px 0; }
+.donut-wrap { position:relative; width:190px; height:190px; flex-shrink:0; }
+.donut-wrap svg { transform:rotate(-90deg); }
+.donut-stroke { transition: stroke-dasharray 1.4s cubic-bezier(.16,1,.3,1); }
+.donut-center { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; }
+.donut-center .big { font-family:var(--font-display); font-size:38px; font-weight:900; line-height:1; }
+.donut-center .small { font-size:11px; color:var(--text-tertiary); margin-top:3px; }
+.donut-legend { flex:1; }
+.donut-legend-title { font-size:12px; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:2px; margin-bottom:14px; font-weight:600; }
+.dl-item { display:flex; align-items:center; gap:10px; margin-bottom:10px; font-size:13px; color:var(--text-secondary); line-height:1.4; }
+.dl-item .dot { width:11px; height:11px; border-radius:3px; flex-shrink:0; }
+.dl-item .pv { font-family:var(--font-mono); font-weight:600; color:var(--text-primary); min-width:48px; font-size:13px; }
+
+/* ═══════════════ RAIL SECTION ═══════════════ */
+.rail-section {
+  background: var(--bg-rail); padding:56px 48px; position:relative; overflow:hidden;
+  color: var(--text-on-dark);
+}
+.rail-section .sec-title, .rail-section .sec-num { color:rgba(255,255,255,.9); }
+.rail-section .sec-desc { color:rgba(255,255,255,.6); }
+.rail-section::after {
+  content:''; position:absolute; bottom:0; left:0; width:200%; height:4px;
+  background:repeating-linear-gradient(90deg, var(--c-amber) 0px, var(--c-amber) 28px, transparent 28px, transparent 40px);
+  animation: train-move 2.5s linear infinite;
+}
+.rail-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:28px 0; }
+.rail-card {
+  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--radius); padding:22px 18px; text-align:center;
+  transition: transform var(--transition), border-color var(--transition);
+}
+.rail-card:hover { transform:translateY(-3px); border-color:rgba(232,146,13,.3); }
+.rail-card .rn { font-family:var(--font-display); font-size:34px; font-weight:900; color:var(--c-amber-light); line-height:1; }
+.rail-card .ru { font-size:13px; color:var(--c-amber-light); font-weight:600; margin-top:2px; }
+.rail-card .rd { font-size:11px; color:rgba(255,255,255,.5); margin-top:7px; line-height:1.35; }
+.rail-section .corr-box { background:rgba(255,255,255,.06); border-color:rgba(232,146,13,.15); }
+.rail-section .corr-box .cb-title { color:rgba(255,255,255,.9); }
+.rail-section .corr-box .cb-body { color:rgba(255,255,255,.6); }
+.rail-section .corr-box .cb-body strong { color:var(--c-amber-light); }
+.rail-section .corr-box .cb-icon { background:rgba(232,146,13,.12); border-color:rgba(232,146,13,.2); }
+
+/* ═══════════════ DIVARIO GRID ═══════════════ */
+.div-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:22px 0; }
+.div-card {
+  background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius);
+  padding:22px; box-shadow:var(--shadow-sm); transition: transform var(--transition);
+}
+.div-card:hover { transform:translateY(-2px); }
+.div-card .dc-label { font-size:11px; text-transform:uppercase; letter-spacing:2px; color:var(--text-tertiary); margin-bottom:12px; font-weight:600; }
+.div-card .dc-row { display:flex; justify-content:space-between; align-items:flex-end; gap:8px; }
+.div-card .dc-val { text-align:center; }
+.div-card .dc-val .num { font-family:var(--font-display); font-size:28px; font-weight:800; line-height:1; }
+.div-card .dc-val .area { font-size:9px; color:var(--text-tertiary); margin-top:3px; text-transform:uppercase; letter-spacing:1.5px; font-weight:600; }
+.div-card .dc-val.nord .num { color:var(--c-teal); }
+.div-card .dc-val.sud .num { color:var(--c-red); }
+.dc-vs { font-size:11px; color:var(--text-tertiary); padding-bottom:6px; font-weight:600; }
+
+/* ═══════════════ CONCLUSION ═══════════════ */
+.conclusion { padding:56px 48px; background:var(--bg-section-alt); }
+.conc-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:28px 0; }
+.conc-card {
+  background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius);
+  padding:24px; box-shadow:var(--shadow-sm);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.conc-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); }
+.conc-card .cn { font-family:var(--font-display); font-size:42px; font-weight:900; color:var(--c-amber); line-height:1; margin-bottom:8px; }
+.conc-card .ct { font-size:13px; color:var(--text-secondary); line-height:1.6; }
+.conc-card .ct strong { color:var(--text-primary); font-weight:700; }
+.conclusion-text {
+  font-size:16px; color:var(--text-secondary); line-height:1.8;
+  max-width:680px; margin-top:24px; padding:24px;
+  background:var(--amber-dim); border-left:4px solid var(--c-amber);
+  border-radius:0 var(--radius) var(--radius) 0;
+}
+.conclusion-text strong { color:var(--c-amber); }
+
+/* ═══════════════ SOURCES SECTION ═══════════════ */
+.sources { padding:56px 48px; }
+.src-block {
+  border-radius:var(--radius); padding:22px 24px; margin-bottom:14px;
+  border-left:4px solid; font-size:13px; line-height:1.8;
+  color:var(--text-secondary);
+}
+.src-block strong { color:var(--text-primary); font-weight:700; }
+.src-block.amber { background:var(--amber-dim); border-color:var(--c-amber); }
+.src-block.teal { background:var(--teal-dim); border-color:var(--c-teal); }
+.src-block.blue { background:var(--blue-dim); border-color:var(--c-blue); }
+.src-block.violet { background:var(--violet-dim); border-color:var(--c-violet); }
+.src-block.red { background:var(--red-dim); border-color:var(--c-red); }
+.src-block .src-tag {
+  display:inline-block; font-size:10px; font-weight:700;
+  text-transform:uppercase; letter-spacing:2px; margin-bottom:6px;
+}
+.src-block.amber .src-tag { color:var(--c-amber); }
+.src-block.teal .src-tag { color:var(--c-teal); }
+.src-block.blue .src-tag { color:var(--c-blue); }
+.src-block.violet .src-tag { color:var(--c-violet); }
+.src-block.red .src-tag { color:var(--c-red); }
+
+/* ═══════════════ FOOTER ═══════════════ */
+.footer {
+  padding:32px 48px; background:var(--bg-card-alt); border-top:1px solid var(--border);
+  text-align:center;
+}
+.footer-brand { font-family:var(--font-display); font-size:15px; font-weight:700; color:var(--text-secondary); }
+.footer-sub { font-size:12px; color:var(--text-tertiary); margin-top:4px; }
+
+/* ═══════════════ DIVIDER ═══════════════ */
+.divider { height:1px; background:var(--border); margin:24px 0; }
+
+/* ═══════════════ RESPONSIVE ═══════════════ */
+@media(max-width:900px){
+  body { max-width:100%; }
+  .hero,.section,.rail-section,.conclusion,.sources,.footer { padding-left:24px; padding-right:24px; }
+  .context-strip { padding:24px; grid-template-columns:repeat(2,1fr); }
+  .hero h1 { font-size:36px; }
+  .rail-grid { grid-template-columns:repeat(2,1fr); }
+  .row { flex-direction:column; }
+  .donut-row { flex-direction:column; align-items:flex-start; }
+  .hbar-label { width:160px; font-size:12px; }
+  .div-grid,.conc-grid { grid-template-columns:1fr; }
+  .avg-box { flex-direction:column; text-align:center; }
+  .sec-title { font-size:26px; }
+}
+</style>
+</head>
+<body>
+
+<!-- THEME TOGGLE -->
+<button class="theme-toggle" onclick="toggleTheme()" title="Cambia tema" aria-label="Cambia tema light/dark">☀️</button>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<div class="hero">
+  <div class="hero-bg-shape a"></div>
+  <div class="hero-bg-shape b"></div>
+  <!-- SVG Train -->
+  <svg class="train-svg" width="120" height="60" viewBox="0 0 120 60" fill="none">
+    <rect x="10" y="15" width="80" height="30" rx="8" fill="white" opacity=".9"/>
+    <rect x="75" y="10" width="35" height="35" rx="6" fill="white" opacity=".9"/>
+    <circle cx="30" cy="50" r="7" fill="white" opacity=".7"/><circle cx="60" cy="50" r="7" fill="white" opacity=".7"/><circle cx="95" cy="50" r="7" fill="white" opacity=".7"/>
+    <rect x="18" y="22" width="14" height="10" rx="2" fill="#1B3A5C" opacity=".5"/>
+    <rect x="38" y="22" width="14" height="10" rx="2" fill="#1B3A5C" opacity=".5"/>
+    <rect x="58" y="22" width="14" height="10" rx="2" fill="#1B3A5C" opacity=".5"/>
+    <rect x="82" y="18" width="20" height="14" rx="2" fill="#E8920D" opacity=".6"/>
+    <line x1="0" y1="57" x2="120" y2="57" stroke="white" stroke-width="2" opacity=".3"/>
+  </svg>
+
+  <div class="hero-badge reveal s1"><span class="dot"></span>A Scuola di OpenCoesione — Indagine 2026</div>
+  <h1 class="reveal s2">Spopolamento e<br><span class="hl">Alta Capacità</span><br>Napoli–Bari</h1>
+  <p class="hero-sub reveal s3">La voce del territorio incontra il progetto: come gli abitanti dell'hinterland beneventano percepiscono il declino demografico — e cosa può cambiare con il più grande investimento ferroviario del Mezzogiorno.</p>
+  <div class="hero-meta reveal s4">
+    <div class="hero-meta-item"><span class="label">Campione</span><span class="value">147 risposte</span></div>
+    <div class="hero-meta-item"><span class="label">Target</span><span class="value">Hinterland BN</span></div>
+    <div class="hero-meta-item"><span class="label">Periodo</span><span class="value">Gennaio 2026</span></div>
+    <div class="hero-meta-item"><span class="label">Investimento</span><span class="value">Oltre € 6 mld</span></div>
+  </div>
+  <div class="hero-train-line"></div>
+</div>
+
+<!-- ═══════════════ SEZIONE 1 — CONTESTO ═══════════════ -->
+<div class="context-strip">
+  <div class="ctx-card reveal s1"><div class="big negative">−5,8%</div><div class="desc">Spopolamento prov. BN<br>2015–2021 (record)</div></div>
+  <div class="ctx-card reveal s2"><div class="big negative">11.300</div><div class="desc">Giovani 15-34 emigrati<br>dalla prov. BN (2014–2024)</div></div>
+  <div class="ctx-card reveal s3"><div class="big negative">−16,8%</div><div class="desc">Riduzione popolazione<br>giovanile nel Sannio</div></div>
+  <div class="ctx-card reveal s4"><div class="big positive">2h</div><div class="desc">Tempo NA–BA futuro<br>(oggi oltre 4 ore)</div></div>
+</div>
+
+<!-- ═══════════════ SEZIONE 2 — IL CAMPIONE ═══════════════ -->
+<div class="section">
+  <div class="sec-num reveal">02 — Il Campione</div>
+  <div class="sec-title reveal s1">Chi ha risposto al questionario</div>
+  <div class="sec-desc reveal s2">147 persone dell'hinterland beneventano. Età media 26 anni. Il questionario è stato somministrato senza rivelare l'obiettivo di correlazione con il progetto AV/AC.</div>
+  <div class="row">
+    <div class="card reveal-left s2">
+      <div class="card-label">Genere</div>
+      <div class="gender-bar">
+        <div class="male" style="width:51%">51%</div>
+        <div class="female" style="width:47.6%">47,6%</div>
+        <div class="other" style="width:1.4%"></div>
+      </div>
+      <div class="gender-legend"><span class="m">Maschi (75)</span><span class="f">Femmine (70)</span></div>
+    </div>
+    <div class="card reveal-right s3" id="age-chart">
+      <div class="card-label">Fasce d'età</div>
+      <div class="age-bars">
+        <div class="age-col"><div class="pct" style="color:var(--c-teal)">47,6%</div><div class="age-fill" data-h="90" style="height:0;background:var(--c-teal)"></div><div class="lbl">&lt;20</div></div>
+        <div class="age-col"><div class="pct" style="color:#3B9FD4">21,4%</div><div class="age-fill" data-h="40" style="height:0;background:#3B9FD4"></div><div class="lbl">20-29</div></div>
+        <div class="age-col"><div class="pct" style="color:var(--c-violet)">16,6%</div><div class="age-fill" data-h="32" style="height:0;background:var(--c-violet)"></div><div class="lbl">30-39</div></div>
+        <div class="age-col"><div class="pct" style="color:var(--c-red)">6,9%</div><div class="age-fill" data-h="13" style="height:0;background:var(--c-red)"></div><div class="lbl">40-49</div></div>
+        <div class="age-col"><div class="pct" style="color:var(--c-amber)">7,6%</div><div class="age-fill" data-h="15" style="height:0;background:var(--c-amber)"></div><div class="lbl">50+</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SEZIONE 3 — PERCEZIONE GRAVITÀ ═══════════════ -->
+<div class="section alt">
+  <div class="sec-num reveal">03 — Percezione della Gravità</div>
+  <div class="sec-title reveal s1">Quanto è grave lo spopolamento?</div>
+  <div class="sec-desc reveal s2">Oltre la metà degli intervistati percepisce il fenomeno come grave o emergenziale.</div>
+
+  <div class="gravity-meter reveal s2" id="gravity-meter">
+    <div class="g-block lv1"><div class="score">1</div><div class="gpct">1,4%</div><div class="glbl">Per nulla</div></div>
+    <div class="g-block lv2"><div class="score">2</div><div class="gpct">12,2%</div><div class="glbl">&nbsp;</div></div>
+    <div class="g-block lv3"><div class="score">3</div><div class="gpct">31,3%</div><div class="glbl">&nbsp;</div></div>
+    <div class="g-block lv4"><div class="score">4</div><div class="gpct">28,6%</div><div class="glbl">&nbsp;</div></div>
+    <div class="g-block lv5"><div class="score">5</div><div class="gpct">26,5%</div><div class="glbl">Emergenza</div></div>
+  </div>
+
+  <div class="avg-box reveal-scale s3">
+    <div class="avg-num">3,67</div>
+    <div class="avg-text">Media di gravità percepita su 5. <strong>Il 55,1% assegna voto 4 o 5</strong>: più di un intervistato su due considera lo spopolamento un problema grave o emergenziale.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="hbar reveal s3" data-bars>
+    <div class="hbar-title">D1. A cosa pensi quando senti "spopolamento"?</div>
+    <div class="hbar-row"><div class="hbar-label">Amici/parenti verso grandi città</div><div class="hbar-track"><div class="hbar-fill amber" data-w="49.7%" style="width:0">49,7%</div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Case abbandonate e saracinesche</div><div class="hbar-track"><div class="hbar-fill red" data-w="32.7%" style="width:0">32,7%</div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Difficoltà a trovare coetanei</div><div class="hbar-track"><div class="hbar-fill teal" data-w="10.9%" style="width:0">10,9%</div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Processo naturale</div><div class="hbar-track"><div class="hbar-fill sky" data-w="6.8%" style="width:0">6,8%</div></div></div>
+  </div>
+
+  <div class="insight-box reveal s4">
+    <div class="ib-label">🔍 Dato chiave</div>
+    <p>Solo il <strong>6,8%</strong> lo ritiene un processo naturale: <strong>il territorio è consapevole della crisi</strong>. Il 50% pensa alla partenza di amici e parenti, un fenomeno sociale e relazionale.</p>
+  </div>
+</div>
+
+<!-- ═══════════════ SEZIONE 4 — CAUSE ═══════════════ -->
+<div class="section">
+  <div class="sec-num reveal">04 — Le Cause della Fuga</div>
+  <div class="sec-title reveal s1">Perché si lascia il territorio?</div>
+  <div class="sec-desc reveal s2">Domanda a risposta multipla (max 2). Il fattore dominante è la mancanza di lavoro qualificato.</div>
+
+  <div class="hbar reveal s2" data-bars>
+    <div class="hbar-row"><div class="hbar-label">Mancanza di sbocchi lavorativi</div><div class="hbar-track"><div class="hbar-fill amber" data-w="93.2%" style="width:0">93,2%</div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Scarsa offerta culturale e svago</div><div class="hbar-track"><div class="hbar-fill violet" data-w="38.1%" style="width:0">38,1%</div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Carenza di trasporti</div><div class="hbar-track"><div class="hbar-fill red" data-w="34.0%" style="width:0">34,0%</div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Digital divide</div><div class="hbar-track"><div class="hbar-fill sky" data-w="5.4%" style="width:0">5,4%</div></div></div>
+  </div>
+
+  <div class="corr-box reveal s3">
+    <div class="cb-head"><div class="cb-icon">🚄</div><div class="cb-title">Correlazione con il Progetto AV/AC</div></div>
+    <div class="cb-body">Il <strong>93,2%</strong> identifica la mancanza di lavoro come causa primaria. La linea AV/AC genererà <strong>62.000 posti di lavoro</strong> e <strong>€ 4,4 miliardi</strong> di valore aggiunto (SVIMEZ-RFI). Il <strong>34%</strong> che cita i trasporti conferma la domanda che il progetto intende soddisfare.</div>
+  </div>
+</div>
+
+<!-- ═══════════════ SEZIONE 5 — NODO TRASPORTI ═══════════════ -->
+<div class="section alt">
+  <div class="sec-num reveal">05 — Il Nodo Trasporti</div>
+  <div class="sec-title reveal s1">Quanto pesano i collegamenti?</div>
+  <div class="sec-desc reveal s2">La carenza infrastrutturale è critica per oltre la metà del campione.</div>
+
+  <div class="donut-row reveal s2" data-donut>
+    <div class="donut-wrap">
+      <svg width="190" height="190" viewBox="0 0 190 190">
+        <circle cx="95" cy="95" r="72" fill="none" stroke="var(--donut-track)" stroke-width="18"/>
+        <circle class="donut-stroke" cx="95" cy="95" r="72" fill="none" stroke="var(--c-red)" stroke-width="18" data-dash="107.7 344.9" stroke-dasharray="0 999" stroke-dashoffset="0"/>
+        <circle class="donut-stroke" cx="95" cy="95" r="72" fill="none" stroke="var(--c-amber)" stroke-width="18" data-dash="132.7 319.9" stroke-dasharray="0 999" stroke-dashoffset="-107.7"/>
+        <circle class="donut-stroke" cx="95" cy="95" r="72" fill="none" stroke="#3B9FD4" stroke-width="18" data-dash="196.9 255.7" stroke-dasharray="0 999" stroke-dashoffset="-240.4"/>
+        <circle class="donut-stroke" cx="95" cy="95" r="72" fill="none" stroke="var(--text-tertiary)" stroke-width="18" data-dash="15.4 437.2" stroke-dasharray="0 999" stroke-dashoffset="-437.3"/>
+      </svg>
+      <div class="donut-center"><div class="big" style="color:var(--c-red)">53%</div><div class="small">impatto alto</div></div>
+    </div>
+    <div class="donut-legend">
+      <div class="donut-legend-title">D5. Impatto carenza collegamenti</div>
+      <div class="dl-item"><div class="dot" style="background:var(--c-red)"></div><span class="pv">23,8%</span><span>Moltissimo: limita studio e socialità</span></div>
+      <div class="dl-item"><div class="dot" style="background:var(--c-amber)"></div><span class="pv">29,3%</span><span>Abbastanza: dipendo dai passaggi</span></div>
+      <div class="dl-item"><div class="dot" style="background:#3B9FD4"></div><span class="pv">43,5%</span><span>Poco: mi muovo in autonomia</span></div>
+      <div class="dl-item"><div class="dot" style="background:var(--text-tertiary)"></div><span class="pv">3,4%</span><span>Per nulla: territorio ben collegato</span></div>
+    </div>
+  </div>
+
+  <div class="insight-box reveal s3">
+    <div class="ib-label">🔍 Lettura incrociata</div>
+    <p>Il <strong>53,1% dichiara un impatto alto</strong>, ma solo il <strong>3,4%</strong> ritiene il territorio ben collegato. Il «poco» (43,5%) va contestualizzato: quasi metà del campione ha meno di 20 anni.</p>
+  </div>
+</div>
+
+<!-- ═══════════════ SEZIONE 6 — PROGETTO AV/AC ═══════════════ -->
+<div class="rail-section">
+  <div class="sec-num reveal">06 — Il Progetto AV/AC Napoli–Bari</div>
+  <div class="sec-title reveal s1">L'investimento che attraversa il Sannio</div>
+  <div class="sec-desc reveal s2">La nuova linea rientra nel Corridoio TEN-T «Scandinavia–Mediterraneo». Attraversa il territorio beneventano: Frasso Telesino, Telese, Vitulano, Apice, Hirpinia.</div>
+
+  <div class="rail-grid">
+    <div class="rail-card reveal s1"><div class="rn">~6</div><div class="ru">miliardi €</div><div class="rd">Investimento complessivo</div></div>
+    <div class="rail-card reveal s2"><div class="rn">145</div><div class="ru">km</div><div class="rd">Nuova linea doppio binario</div></div>
+    <div class="rail-card reveal s3"><div class="rn">250</div><div class="ru">km/h</div><div class="rd">Velocità massima</div></div>
+    <div class="rail-card reveal s1"><div class="rn">62k</div><div class="ru">posti lavoro</div><div class="rd">Impatto occupazionale (SVIMEZ)</div></div>
+    <div class="rail-card reveal s2"><div class="rn">4,4</div><div class="ru">miliardi €</div><div class="rd">Valore aggiunto generato</div></div>
+    <div class="rail-card reveal s3"><div class="rn">−141k</div><div class="ru">t CO₂/anno</div><div class="rd">Riduzione emissioni stimate</div></div>
+  </div>
+
+  <div class="corr-box reveal s4">
+    <div class="cb-head"><div class="cb-icon">📊</div><div class="cb-title">Finanziamenti (OpenCoesione)</div></div>
+    <div class="cb-body">Programma «<strong>PSC MIT</strong>» (Piano Sviluppo e Coesione del MIT): <strong>€ 29,9 mld</strong> (dato OpenCoesione). RFI ha attinto <strong>€ 11,7 miliardi</strong> per il potenziamento ferroviario. L'<strong>80,8%</strong> degli investimenti in trasporti da fondi coesione è destinato al Mezzogiorno.</div>
+  </div>
+</div>
+
+<!-- ═══════════════ SEZIONE 7 — DIVARIO ═══════════════ -->
+<div class="section">
+  <div class="sec-num reveal">07 — Il Divario Infrastrutturale</div>
+  <div class="sec-title reveal s1">Perché il Sud ha bisogno di questa linea</div>
+  <div class="sec-desc reveal s2">Dati SVIMEZ e ISTAT mostrano un gap strutturale confermato dalla percezione degli abitanti.</div>
+
+  <div class="div-grid">
+    <div class="div-card reveal s1"><div class="dc-label">Rete ferroviaria fondamentale</div><div class="dc-row"><div class="dc-val nord"><div class="num">53,5%</div><div class="area">Centro-Nord</div></div><div class="dc-vs">vs</div><div class="dc-val sud"><div class="num">21,4%</div><div class="area">Sud</div></div></div></div>
+    <div class="div-card reveal s2"><div class="dc-label">Rete a doppio binario</div><div class="dc-row"><div class="dc-val nord"><div class="num">53,4%</div><div class="area">Centro-Nord</div></div><div class="dc-vs">vs</div><div class="dc-val sud"><div class="num">31,7%</div><div class="area">Sud</div></div></div></div>
+    <div class="div-card reveal s3"><div class="dc-label">Merci su ferro</div><div class="dc-row"><div class="dc-val nord"><div class="num">&gt;40%</div><div class="area">Nord</div></div><div class="dc-vs">vs</div><div class="dc-val sud"><div class="num">&lt;10%</div><div class="area">Sud</div></div></div></div>
+    <div class="div-card reveal s4"><div class="dc-label">Comuni in calo demografico</div><div class="dc-row"><div class="dc-val nord"><div class="num">31,9%</div><div class="area">Centro-Nord</div></div><div class="dc-vs">vs</div><div class="dc-val sud"><div class="num">62,0%</div><div class="area">Sud</div></div></div></div>
+  </div>
+
+  <div class="insight-box reveal s5">
+    <div class="ib-label">🔍 Il costo del divario</div>
+    <p>Dotazione infrastrutturale del Sud <strong>−30% dalla media nazionale</strong> (SVIMEZ). Gap logistico: <strong>€ 20 miliardi/anno</strong> di costi aggiuntivi. Benevento: spopolamento record e <strong>13,1% famiglie senza rete</strong>.</p>
+  </div>
+</div>
+
+<!-- ═══════════════ SEZIONE 8 — FUTURO ═══════════════ -->
+<div class="section alt">
+  <div class="sec-num reveal">08 — Visione del Futuro</div>
+  <div class="sec-title reveal s1">Restare o partire? Cosa serve</div>
+  <div class="sec-desc reveal s2">Una popolazione che non vuole andarsene, ma chiede condizioni concrete per restare.</div>
+
+  <div class="donut-row reveal s2" data-donut>
+    <div class="donut-wrap">
+      <svg width="190" height="190" viewBox="0 0 190 190">
+        <circle cx="95" cy="95" r="72" fill="none" stroke="var(--donut-track)" stroke-width="18"/>
+        <circle class="donut-stroke" cx="95" cy="95" r="72" fill="none" stroke="var(--c-green)" stroke-width="18" data-dash="252.5 200.1" stroke-dasharray="0 999" stroke-dashoffset="0"/>
+        <circle class="donut-stroke" cx="95" cy="95" r="72" fill="none" stroke="var(--c-amber)" stroke-width="18" data-dash="92.3 360.3" stroke-dasharray="0 999" stroke-dashoffset="-252.5"/>
+        <circle class="donut-stroke" cx="95" cy="95" r="72" fill="none" stroke="#3B9FD4" stroke-width="18" data-dash="58.4 394.2" stroke-dasharray="0 999" stroke-dashoffset="-344.8"/>
+        <circle class="donut-stroke" cx="95" cy="95" r="72" fill="none" stroke="var(--c-red)" stroke-width="18" data-dash="49.3 403.3" stroke-dasharray="0 999" stroke-dashoffset="-403.2"/>
+      </svg>
+      <div class="donut-center"><div class="big" style="color:var(--c-green)">76%</div><div class="small">resterebbero</div></div>
+    </div>
+    <div class="donut-legend">
+      <div class="donut-legend-title">D6. Resteresti nel tuo paese?</div>
+      <div class="dl-item"><div class="dot" style="background:var(--c-green)"></div><span class="pv">55,8%</span><span>Sì, con condizioni lavorative</span></div>
+      <div class="dl-item"><div class="dot" style="background:var(--c-amber)"></div><span class="pv">20,4%</span><span>Dipende dai servizi</span></div>
+      <div class="dl-item"><div class="dot" style="background:#3B9FD4"></div><span class="pv">12,9%</span><span>No, preferisco la grande città</span></div>
+      <div class="dl-item"><div class="dot" style="background:var(--c-red)"></div><span class="pv">10,9%</span><span>Ho già intenzione di trasferirmi</span></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="hbar reveal s3" data-bars>
+    <div class="hbar-title">D7. Settore per il rilancio</div>
+    <div class="hbar-row"><div class="hbar-label">Turismo sostenibile e borghi</div><div class="hbar-track"><div class="hbar-fill amber" data-w="34.0%" style="width:0">34,0%</div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Smart working da remoto</div><div class="hbar-track"><div class="hbar-fill teal" data-w="27.9%" style="width:0">27,9%</div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Artigianato digitale</div><div class="hbar-track"><div class="hbar-fill violet" data-w="20.4%" style="width:0">20,4%</div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Agricoltura tecnologica / km zero</div><div class="hbar-track"><div class="hbar-fill green" data-w="17.7%" style="width:0">17,7%</div></div></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="hbar reveal s3" data-bars>
+    <div class="hbar-title">D10. Intervento più urgente</div>
+    <div class="hbar-row"><div class="hbar-label">Incentivi giovani imprenditori</div><div class="hbar-track"><div class="hbar-fill amber" data-w="53.7%" style="width:0">53,7%</div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Più mezzi pubblici e collegamenti</div><div class="hbar-track"><div class="hbar-fill red" data-w="23.8%" style="width:0">23,8%</div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Scuole e centri medici</div><div class="hbar-track"><div class="hbar-fill teal" data-w="14.3%" style="width:0">14,3%</div></div></div>
+    <div class="hbar-row"><div class="hbar-label">Spazi aggregazione e co-working</div><div class="hbar-track"><div class="hbar-fill sky" data-w="8.2%" style="width:0">8,2%</div></div></div>
+  </div>
+
+  <div class="corr-box reveal s4">
+    <div class="cb-head"><div class="cb-icon">🎯</div><div class="cb-title">Il circolo che l'AV/AC può spezzare</div></div>
+    <div class="cb-body">Il <strong>76,2% resterebbe con lavoro e servizi</strong>. Il <strong>53,7%</strong> chiede incentivi e il <strong>23,8%</strong> più collegamenti: insieme il <strong>77%</strong> delle richieste. La stazione <strong>Hirpinia</strong> e le nuove fermate (Amorosi, Telese, Solopaca, San Lorenzo) possono attivare l'indotto nelle ZES campane.</div>
+  </div>
+</div>
+
+<!-- ═══════════════ SEZIONE 8b — DIGITALE E TURISMO ═══════════════ -->
+<div class="section">
+  <div class="sec-num reveal">08b — Digitale e Turismo</div>
+  <div class="sec-title reveal s1">Soluzioni complementari all'infrastruttura</div>
+  <div class="sec-desc reveal s2">Internet e turismo: complementi, non sostituti delle infrastrutture fisiche.</div>
+
+  <div class="row">
+    <div class="card reveal-left s2">
+      <div class="card-label">D8. Internet può frenare lo spopolamento?</div>
+      <div class="hbar" data-bars style="margin:0">
+        <div class="hbar-row"><div class="hbar-label" style="width:150px;font-size:12px">Fondamentale</div><div class="hbar-track"><div class="hbar-fill teal" data-w="28.6%" style="width:0">28,6%</div></div></div>
+        <div class="hbar-row"><div class="hbar-label" style="width:150px;font-size:12px">Utile, ma servono treni</div><div class="hbar-track"><div class="hbar-fill amber" data-w="29.9%" style="width:0">29,9%</div></div></div>
+        <div class="hbar-row"><div class="hbar-label" style="width:150px;font-size:12px">Poca influenza</div><div class="hbar-track"><div class="hbar-fill red" data-w="35.4%" style="width:0">35,4%</div></div></div>
+        <div class="hbar-row" style="margin:0"><div class="hbar-label" style="width:150px;font-size:12px">Non saprei</div><div class="hbar-track"><div class="hbar-fill sky" data-w="6.1%" style="width:0">6,1%</div></div></div>
+      </div>
+    </div>
+    <div class="card reveal-right s3">
+      <div class="card-label">D9. Il turismo è una soluzione reale?</div>
+      <div class="hbar" data-bars style="margin:0">
+        <div class="hbar-row"><div class="hbar-label" style="width:150px;font-size:12px">Soluzione reale</div><div class="hbar-track"><div class="hbar-fill teal" data-w="38.1%" style="width:0">38,1%</div></div></div>
+        <div class="hbar-row"><div class="hbar-label" style="width:150px;font-size:12px">Solo aiuto temporaneo</div><div class="hbar-track"><div class="hbar-fill amber" data-w="34.0%" style="width:0">34,0%</div></div></div>
+        <div class="hbar-row"><div class="hbar-label" style="width:150px;font-size:12px">Utile se non stravolge</div><div class="hbar-track"><div class="hbar-fill red" data-w="21.8%" style="width:0">21,8%</div></div></div>
+        <div class="hbar-row" style="margin:0"><div class="hbar-label" style="width:150px;font-size:12px">Rischio «musei vuoti»</div><div class="hbar-track"><div class="hbar-fill sky" data-w="6.1%" style="width:0">6,1%</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight-box reveal s4">
+    <div class="ib-label">🔍 Infrastruttura fisica prima di quella digitale</div>
+    <p>Il <strong>58,5%</strong> riconosce l'importanza del digitale, ma la priorità è chiara: <strong>prima i collegamenti fisici</strong>. Il turismo divide: soluzione reale per il 38%, palliativo per il 34%. L'AV/AC può potenziare entrambe le dimensioni.</p>
+  </div>
+</div>
+
+<!-- ═══════════════ SEZIONE 9 — SINTESI ═══════════════ -->
+<div class="conclusion">
+  <div class="sec-num reveal">09 — Sintesi Finale</div>
+  <div class="sec-title reveal s1">La voce del territorio incontra il progetto</div>
+  <div class="sec-desc reveal s2">Quattro numeri che sintetizzano la correlazione tra i dati del questionario e il progetto AV/AC.</div>
+
+  <div class="conc-grid">
+    <div class="conc-card reveal s1"><div class="cn">93%</div><div class="ct">Chiede <strong>lavoro qualificato</strong>.<br>AV/AC: 62.000 posti (SVIMEZ)</div></div>
+    <div class="conc-card reveal s2"><div class="cn">76%</div><div class="ct">Resterebbe se avesse <strong>le condizioni</strong>.<br>Infrastruttura crea premesse.</div></div>
+    <div class="conc-card reveal s3"><div class="cn">53%</div><div class="ct">Soffre la <strong>carenza trasporti</strong>.<br>AV/AC: tempi dimezzati.</div></div>
+    <div class="conc-card reveal s4"><div class="cn">77%</div><div class="ct">Chiede <strong>incentivi + trasporti</strong>.<br>Le priorità del corridoio TEN-T.</div></div>
+  </div>
+
+  <div class="conclusion-text reveal s5">Lo spopolamento dell'hinterland beneventano <strong>non è una fatalità</strong>: è il risultato di un deficit di connessione, lavoro e servizi. Il progetto AV/AC Napoli–Bari rappresenta la <strong>risposta infrastrutturale a una domanda sociale reale</strong>, documentata da questo questionario.</div>
+</div>
+
+<!-- ═══════════════ SEZIONE 10 — FONTI ═══════════════ -->
+<div class="sources">
+  <div class="sec-num reveal">10 — Fonti e Metodologia</div>
+  <div class="sec-title reveal s1">Appendice: dati e fonti puntuali</div>
+  <div class="sec-desc reveal s2">Ogni dato è tracciabile. I dati del questionario sono elaborazioni proprie; i dati di contesto provengono da fonti istituzionali.</div>
+
+  <div class="src-block amber reveal s1">
+    <div class="src-tag">A — Dati Primari (Questionario)</div><br>
+    <strong>Fonte:</strong> Elaborazione propria su questionario Google Forms, 147 risposte, gennaio 2026.<br>
+    <strong>Dati coperti:</strong> Tutte le % delle domande D1–D10, distribuzione genere/età, media gravità 3,67/5.<br>
+    <strong>Aggregazioni:</strong> 53,1% impatto trasporti (D5 A+B), 76,2% resterebbero (D6 A+C), 58,5% internet (D8 A+B), 77,5% incentivi+trasporti (D10 A+B).<br>
+    <strong>Metodologia:</strong> risposta chiusa, senza rivelare correlazione AV/AC. D4 multi-risposta (max 2), % su 147.
+  </div>
+
+  <div class="src-block teal reveal s2">
+    <div class="src-tag">B — Contesto Territoriale</div><br>
+    <strong>−5,8% spopolamento prov. BN</strong> → Rapporto Aree Interne Campania, Confindustria Campania / Univ. Sannio, 2023. Ripreso da Il Sole 24 Ore, 31/01/2023.<br>
+    <strong>11.300 giovani emigrati · −16,8% pop. giovanile</strong> → CGIA Mestre, report emigrazione. Ripreso da Anteprima24, 24/10/2025.<br>
+    <strong>13,1% famiglie senza rete</strong> → Rapporto Confindustria Campania 2023.<br>
+    <strong>31,9% vs 62,0% comuni in calo</strong> → ISTAT «Aree Interne», luglio 2024. Ripreso da Collettiva.it, 19/08/2024.
+  </div>
+
+  <div class="src-block blue reveal s3">
+    <div class="src-tag">C — Progetto AV/AC Napoli-Bari</div><br>
+    <strong>Oltre € 6 mld · 145 km · 250 km/h · 2h NA-BA</strong> → RFI / Gruppo FS Italiane (fsitaliane.it). Nota: alcune fonti citano 121 km nuovi + tratte esistenti.<br>
+    <strong>62.000 posti lavoro · € 4,4 mld valore aggiunto</strong> → Studio SVIMEZ-RFI, Rapporto SVIMEZ 2024. Comunicato rfi.it, 25/11/2024. Dettaglio: 53k diretti+indiretti, 62k con indotti.<br>
+    <strong>−141.000 t CO₂/anno</strong> → Analisi SVIMEZ shift modale gomma→ferro (638.000 camion/anno equiv.).
+  </div>
+
+  <div class="src-block violet reveal s4">
+    <div class="src-tag">D — OpenCoesione</div><br>
+    <strong>PSC MIT (Piano Sviluppo e Coesione del MIT):</strong> € 29,9 mld → opencoesione.gov.it, programma PSCINFRASTRUT.<br>
+    <strong>€ 11,7 mld attinti da RFI</strong> → opencoesione.gov.it, soggetto RFI.<br>
+    <strong>80,8% investimenti trasporti al Mezzogiorno</strong> → OpenCoesione Focus Trasporti (agg. 28/02/2025). ⚠ Si riferisce a € 85,7 mld su tutti i cicli di programmazione (fondi coesione), non al solo PSC MIT.
+  </div>
+
+  <div class="src-block red reveal s5">
+    <div class="src-tag">E — Divario Infrastrutturale</div><br>
+    <strong>53,5% vs 21,4% rete fondamentale · 53,4% vs 31,7% doppio binario</strong> → SVIMEZ, audizione Camere federalismo fiscale, apr. 2024. Ripreso da Fortune Italia, 24/04/2024.<br>
+    <strong>&gt;40% vs &lt;10% merci su ferro · −30% dotazione · € 20 mld/anno gap</strong> → SVIMEZ Rapporto 2024. Ripreso da siciliainprogress.com, 08/10/2025.
+  </div>
+</div>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<div class="footer">
+  <div class="footer-brand reveal">A Scuola di OpenCoesione</div>
+  <div class="footer-sub reveal s1">Monitoraggio civico e politiche di coesione — Infografica educativa 2026</div>
+</div>
+
+<!-- ═══════════════ JAVASCRIPT ═══════════════ -->
+<script>
+/* Theme toggle */
+function toggleTheme(){
+  const html=document.documentElement;
+  const next=html.getAttribute('data-theme')==='light'?'dark':'light';
+  html.setAttribute('data-theme',next);
+  document.querySelector('.theme-toggle').textContent=next==='light'?'☀️':'🌙';
+  try{localStorage.setItem('theme',next)}catch(e){}
+}
+try{const s=localStorage.getItem('theme');if(s){document.documentElement.setAttribute('data-theme',s);if(s==='dark')document.querySelector('.theme-toggle').textContent='🌙';}}catch(e){}
+
+/* Intersection Observer — reveal animations */
+document.addEventListener('DOMContentLoaded',()=>{
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}});
+  },{threshold:.15,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale').forEach(el=>io.observe(el));
+
+  /* Animated horizontal bars */
+  const barObs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const fills=e.target.querySelectorAll('.hbar-fill');
+        fills.forEach((f,i)=>{
+          setTimeout(()=>{f.style.width=f.dataset.w},i*120);
+        });
+        barObs.unobserve(e.target);
+      }
+    });
+  },{threshold:.2});
+  document.querySelectorAll('[data-bars]').forEach(el=>barObs.observe(el));
+
+  /* Animated donut charts */
+  const donutObs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const strokes=e.target.querySelectorAll('.donut-stroke');
+        strokes.forEach((s,i)=>{
+          setTimeout(()=>{s.setAttribute('stroke-dasharray',s.dataset.dash)},i*150);
+        });
+        donutObs.unobserve(e.target);
+      }
+    });
+  },{threshold:.25});
+  document.querySelectorAll('[data-donut]').forEach(el=>donutObs.observe(el));
+
+  /* Animated age bars */
+  const ageObs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.age-fill').forEach((f,i)=>{
+          setTimeout(()=>{f.style.height=f.dataset.h+'px'},i*100);
+        });
+        ageObs.unobserve(e.target);
+      }
+    });
+  },{threshold:.3});
+  const ac=document.getElementById('age-chart');if(ac)ageObs.observe(ac);
+
+  /* Gravity meter stagger */
+  const gObs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.g-block').forEach((b,i)=>{
+          b.style.opacity='0';b.style.transform='translateY(18px)';
+          b.style.transition=`opacity .5s ease ${i*.08}s, transform .5s ease ${i*.08}s`;
+          requestAnimationFrame(()=>requestAnimationFrame(()=>{
+            b.style.opacity='1';b.style.transform='translateY(0)';
+          }));
+        });
+        gObs.unobserve(e.target);
+      }
+    });
+  },{threshold:.3});
+  const gm=document.getElementById('gravity-meter');if(gm)gObs.observe(gm);
+});
+</script>
+</body>
+</html>
